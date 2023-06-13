@@ -1,11 +1,14 @@
 import { CommandInt } from '../interface';
-import { SlashCommandBuilder, EmbedBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder } from '@discordjs/builders';
+import { buttonGithub } from '../buttons/github';
 
 export const interactionHello: CommandInt = {
 	data: new SlashCommandBuilder()
 		.setName('hello')
 		.setDescription('Provides information on using this bot!'),
 	run: async ({ data, api }) => {
+		const row = new ActionRowBuilder().addComponents(buttonGithub.data);
+
 		const { data: helpEmbed } = new EmbedBuilder()
 			.setTitle('Hello There!')
 			.setDescription(
@@ -18,6 +21,7 @@ export const interactionHello: CommandInt = {
 			data.token,
 			{
 				embeds: [helpEmbed],
+				components: [row],
 			},
 		);
 		return;
